@@ -59,12 +59,23 @@ public class Interval {
             return false;
     }
 
-    public Interval intersect(Interval i){
-        double novaPocetna,novaKrajnja;
-
-    }
 
     public static Interval intersect(Interval i1, Interval i2){
+        if((i1.krajnjaTacka<i2.pocetnaTacka && i1.pocetnaTacka<i2.pocetnaTacka) || (i2.krajnjaTacka<i1.pocetnaTacka && i2.pocetnaTacka<i1.pocetnaTacka))
+            return new Interval();
+        else if((i1.krajnjaTacka<i2.krajnjaTacka && i1.pocetnaTacka>i2.pocetnaTacka))
+            return new Interval(i1.pocetnaTacka,i1.krajnjaTacka,i1.imaPocetna,i1.imaKrajnja);
+        else if((i2.krajnjaTacka<i1.krajnjaTacka && i2.pocetnaTacka>i1.pocetnaTacka))
+            return new Interval(i2.pocetnaTacka,i2.krajnjaTacka,i2.imaPocetna,i2.imaKrajnja);
+        else if(i1.pocetnaTacka<i2.pocetnaTacka && i1.krajnjaTacka>i2.krajnjaTacka)
+            return new Interval(i2.pocetnaTacka,i1.krajnjaTacka,i2.imaPocetna,i1.imaKrajnja);
+        else if(i2.pocetnaTacka<i1.pocetnaTacka && i2.krajnjaTacka>i1.krajnjaTacka)
+            return new Interval(i1.pocetnaTacka,i2.krajnjaTacka,i1.imaPocetna,i2.imaKrajnja);
+        else if(i1.pocetnaTacka==i2.pocetnaTacka && i1.krajnjaTacka==i2.krajnjaTacka)
+            return new Interval(i1.pocetnaTacka,i1.krajnjaTacka,i1.imaPocetna || i2.imaPocetna,i1.imaKrajnja || i2.imaKrajnja);
+    }
 
+    public Interval intersect(Interval i){
+        return intersect(*this,i);
     }
 }
